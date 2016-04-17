@@ -68,10 +68,11 @@ def draw_smells():
 	wumpus.set_small_positions(wumpus_smell_positions)
 
 def draw_wumpus():
-	x = (wumpus.position_x * board.cell_dimension) + (wumpus.position_x * board.spacing) + board.spacing
-	y = (wumpus.position_y * board.cell_dimension) + (wumpus.position_y * board.spacing) + board.spacing
-	wumpus_image = load_image(wumpus.image)
-	mainscreen.blit(wumpus_image,(x,y))
+	if(wumpus.visible):	
+		x = (wumpus.position_x * board.cell_dimension) + (wumpus.position_x * board.spacing) + board.spacing
+		y = (wumpus.position_y * board.cell_dimension) + (wumpus.position_y * board.spacing) + board.spacing
+		wumpus_image = load_image(wumpus.image)
+		mainscreen.blit(wumpus_image,(x,y))
 	draw_smells()
 
 def draw_matrix():
@@ -85,8 +86,7 @@ def draw_matrix():
 		y += (board.spacing + board.cell_dimension)
 		x = board.spacing
 	
-	if(wumpus.visible):	
-		draw_wumpus()
+	draw_wumpus()
 	draw_hunter()
 	pygame.display.flip()
 
