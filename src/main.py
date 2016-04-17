@@ -22,8 +22,8 @@ pygame.display.set_caption(namegame)
 board = Board()
 hunter = Hunter()
 wumpus = Wumpus()
-wumpus.position_x = randint(0,5)
-wumpus.position_y = randint(0,5)
+wumpus.position_x = randint(3,5)
+wumpus.position_y = randint(3,5)
 mainscreen = pygame.display.set_mode((board.width, board.height), screentype, 32)
 ###
 
