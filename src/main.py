@@ -44,7 +44,7 @@ def draw_hunter_smells():
 	hunter_y = hunter.position_y
 	hunter_smell_positions = []
 	hunter.clean_small_positions()
-	hunter_smell = load_image(hunter.smell)
+	hunter_smell = load_image_alpha(hunter.smell)
 	
 	for i in range(1, hunter.smell_distance + 1):
 		s1 = (hunter_x - i, hunter_y)
@@ -81,7 +81,7 @@ def draw_wumpus_smells():
 	wumpus_y = wumpus.position_y
 	wumpus_smell_positions = []
 	wumpus.clean_small_positions()
-	wumpus_smell = load_image(wumpus.smell)
+	wumpus_smell = load_image_alpha(wumpus.smell)
 	
 	for i in range(1, wumpus.smell_distance + 1):
 		s1 = (wumpus_x - i, wumpus_y)
