@@ -5,7 +5,7 @@ import pygame
 import sys
 from pygame.locals import *
 from board import Board
-from player import Player
+from hunter import Hunter
 import random
 pygame.init()
 clock = pygame.time.Clock()
@@ -13,13 +13,13 @@ clock = pygame.time.Clock()
 ### Properties ###
 namegame = "Wumpus Game"
 screentype = 0
-#screentype = FULLSCREEN
+#screentype = FULLSCREENs
 sound_volume = 0.4
 pygame.display.set_caption(namegame)
 
 ### Global variables ###
 board = Board()
-hunter = Player()
+hunter = Hunter()
 mainscreen = pygame.display.set_mode((board.width, board.height), screentype, 32)
 ###
 

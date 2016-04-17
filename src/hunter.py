@@ -1,4 +1,4 @@
-class Player (object):
+class Hunter (object):
 	
 	def __init__(self):
 		self.position_x = 0
