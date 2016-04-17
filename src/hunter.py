@@ -3,6 +3,9 @@ class Hunter (object):
 	def __init__(self):
 		self.position_x = 0
 		self.position_y = 0
+		self.smell_distance = 2
+		self.smell_visible = True
+		self.smell = "../res/images/hunter/smell.png"
 		self.direction = "FRONT"
 		self.image = "../res/images/hunter/hunter_front.png"
 	
@@ -32,3 +35,9 @@ class Hunter (object):
 		if(self.direction == "BACK"):
 			self.position_y = self.position_y - 1
 		self.direction = "BACK"
+		
+	def set_small_positions(self, positions):
+		self.smell_positions.append(positions)
+		
+	def clean_small_positions(self):
+		self.smell_positions = []
