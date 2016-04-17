@@ -26,7 +26,7 @@ class Wumpus (object):
 		self.position_y = self.position_y - 1
 	
 	def set_small_positions(self, positions):
-		self.smell_positions.append(positions)
+		self.smell_positions = positions
 	
 	def clean_small_positions(self):
 		self.smell_positions = []

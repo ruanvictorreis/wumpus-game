@@ -60,12 +60,13 @@ def draw_hunter_smells():
 			list_s.append((hunter_x + i, hunter_y - i))
 			list_s.append((hunter_x - i, hunter_y + i))
 		
-		if(hunter.smell_visible):
-			for j in list_s:
+		
+		for j in list_s:
+			if(hunter.smell_visible):
 				x = (j[0] * board.cell_dimension) + (j[0] * board.spacing) + board.spacing
 				y = (j[1] * board.cell_dimension) + (j[1] * board.spacing) + board.spacing	
 				mainscreen.blit(hunter_smell,(x,y))
-				hunter_smell_positions.append(j)
+			hunter_smell_positions.append(j)
 				
 	hunter.set_small_positions(hunter_smell_positions)
 
@@ -97,12 +98,12 @@ def draw_wumpus_smells():
 			list_s.append((wumpus_x + i, wumpus_y - i))
 			list_s.append((wumpus_x - i, wumpus_y + i))
 		
-		if(wumpus.smell_visible):
-			for j in list_s:
+		for j in list_s:
+			if(wumpus.smell_visible):
 				x = (j[0] * board.cell_dimension) + (j[0] * board.spacing) + board.spacing
 				y = (j[1] * board.cell_dimension) + (j[1] * board.spacing) + board.spacing	
 				mainscreen.blit(wumpus_smell,(x,y))
-				wumpus_smell_positions.append(j)
+			wumpus_smell_positions.append(j)
 				
 	wumpus.set_small_positions(wumpus_smell_positions)
 
