@@ -6,6 +6,7 @@ import sys
 from pygame.locals import *
 from board import Board
 from hunter import Hunter
+from wumpus import Wumpus
 import random
 pygame.init()
 clock = pygame.time.Clock()
@@ -20,6 +21,7 @@ pygame.display.set_caption(namegame)
 ### Global variables ###
 board = Board()
 hunter = Hunter()
+wumpus = Wumpus()
 mainscreen = pygame.display.set_mode((board.width, board.height), screentype, 32)
 ###
 
@@ -40,6 +42,12 @@ def draw_hunter():
 	y = (hunter.position_y * board.cell_dimension) + (hunter.position_y * board.spacing) + board.spacing
 	hunter_image = load_image(hunter.image)
 	mainscreen.blit(hunter_image,(x,y))
+	
+def draw_wumpus():
+	x = (wumpus.position_x * board.cell_dimension) + (wumpus.position_x * board.spacing) + board.spacing
+	y = (wumpus.position_y * board.cell_dimension) + (wumpus.position_y * board.spacing) + board.spacing
+	wumpus_image = load_image(wumpus.image)
+	mainscreen.blit(wumpus_image,(x,y))
 
 def draw_matrix():
 	x = board.spacing
@@ -51,8 +59,10 @@ def draw_matrix():
 			x += (board.spacing + board.cell_dimension)
 		y += (board.spacing + board.cell_dimension)
 		x = board.spacing
-		
+	
 	draw_hunter()
+	if(wumpus.visible):	
+		draw_wumpus()
 	pygame.display.flip()
 
 def move_left():
