@@ -4,13 +4,13 @@ class Hunter (object):
 		self.position_x = 0
 		self.position_y = 0
 		self.smell_distance = 2
-		self.smell_visible = True
+		self.smell_visible = False
 		self.smell = "../res/images/hunter/smell.png"
 		self.direction = "FRONT"
 		self.image = "../res/images/hunter/hunter_front.png"
 	
 	def position(self):
-		return (self.x, self.y)
+		return (self.position_x, self.position_y)
 	
 	def increment_x(self):
 		self.image = "../res/images/hunter/hunter_right.png"

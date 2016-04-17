@@ -1,17 +1,17 @@
 class Wumpus (object):
 	
 	def __init__(self):
-		self.visible = True
+		self.visible = False
 		self.position_x = 5
 		self.position_y = 5
 		self.smell_distance = 2
 		self.smell_positions = []
-		self.smell_visible = True
+		self.smell_visible = False
 		self.image = "../res/images/wumpus/wumpus.png"
 		self.smell = "../res/images/wumpus/smell.png"
 		
 	def position(self):
-		return (self.x, self.y)
+		return (self.position_x, self.position_y)
 	
 	def increment_x(self):
 		self.position_x = self.position_x + 1

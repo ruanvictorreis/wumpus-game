@@ -115,6 +115,30 @@ def draw_wumpus():
 		mainscreen.blit(wumpus_image,(x,y))
 	draw_wumpus_smells()
 
+def perception_smell(position):
+	x = (position[0] * board.cell_dimension) + (position[0] * board.spacing) + board.spacing
+	y = (position[1] * board.cell_dimension) + (position[1] * board.spacing) + board.spacing	
+	
+	wumpus_smell = load_image_alpha(wumpus.smell)
+	mainscreen.blit(wumpus_smell,(x,y))
+
+def perception_wumpus(position):
+	x = (position[0] * board.cell_dimension) + (position[0] * board.spacing) + board.spacing
+	y = (position[1] * board.cell_dimension) + (position[1] * board.spacing) + board.spacing	
+	
+	wumpus_image = load_image_alpha(wumpus.image)
+	mainscreen.blit(wumpus_image,(x,y))
+
+def perception():
+	hunter_position = hunter.position()
+	smells_position = wumpus.smell_positions
+	
+	if(hunter_position in smells_position):
+		perception_smell(hunter_position)
+	
+	if(hunter_position == wumpus.position()):
+		perception_wumpus(hunter_position)
+			
 def draw_matrix():
 	x = board.spacing
 	y = board.spacing
@@ -127,6 +151,7 @@ def draw_matrix():
 		x = board.spacing
 	
 	draw_wumpus()
+	perception()
 	draw_hunter()
 	pygame.display.flip()
 
