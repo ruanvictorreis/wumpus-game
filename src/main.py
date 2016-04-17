@@ -43,11 +43,36 @@ def draw_hunter():
 	hunter_image = load_image(hunter.image)
 	mainscreen.blit(hunter_image,(x,y))
 	
+def draw_smells():
+	wumpus_x = wumpus.position_x
+	wumpus_y = wumpus.position_y
+	wumpus_smell_positions = []
+	wumpus.clean_small_positions()
+	wumpus_smell = load_image(wumpus.smell)
+	
+	for i in range(1, wumpus.smell_distance + 1):
+		s1 = (wumpus_x - i, wumpus_y)
+		s2 = (wumpus_x + i, wumpus_y)
+		s3 = (wumpus_x, wumpus_y - i)         
+		s4 = (wumpus_x, wumpus_y + i)
+		
+		list_s = [s1, s2, s3, s4]
+		
+		if(wumpus.smell_visible):
+			for j in list_s:
+				x = (j[0] * board.cell_dimension) + (j[0] * board.spacing) + board.spacing
+				y = (j[1] * board.cell_dimension) + (j[1] * board.spacing) + board.spacing	
+				mainscreen.blit(wumpus_smell,(x,y))
+				wumpus_smell_positions.append(j)
+				
+	wumpus.set_small_positions(wumpus_smell_positions)
+
 def draw_wumpus():
 	x = (wumpus.position_x * board.cell_dimension) + (wumpus.position_x * board.spacing) + board.spacing
 	y = (wumpus.position_y * board.cell_dimension) + (wumpus.position_y * board.spacing) + board.spacing
 	wumpus_image = load_image(wumpus.image)
 	mainscreen.blit(wumpus_image,(x,y))
+	draw_smells()
 
 def draw_matrix():
 	x = board.spacing
@@ -60,9 +85,9 @@ def draw_matrix():
 		y += (board.spacing + board.cell_dimension)
 		x = board.spacing
 	
-	draw_hunter()
 	if(wumpus.visible):	
 		draw_wumpus()
+	draw_hunter()
 	pygame.display.flip()
 
 def move_left():
