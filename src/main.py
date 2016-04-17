@@ -40,7 +40,7 @@ cell = load_image("../res/images/cell.png")
 def draw_hunter():
 	x = (hunter.position_x * board.cell_dimension) + (hunter.position_x * board.spacing) + board.spacing
 	y = (hunter.position_y * board.cell_dimension) + (hunter.position_y * board.spacing) + board.spacing
-	hunter_image = load_image(hunter.image)
+	hunter_image = load_image_alpha(hunter.image)
 	mainscreen.blit(hunter_image,(x,y))
 	
 def draw_smells():
