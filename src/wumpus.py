@@ -1,12 +1,12 @@
 class Wumpus (object):
 	
 	def __init__(self):
-		self.visible = False
+		self.visible = True
 		self.position_x = 5
-		self.position_y = 5
-		self.smell_distance = 2
+		self.position_y = 0
+		self.smell_distance = 1
 		self.smell_positions = []
-		self.smell_visible = False
+		self.smell_visible = True
 		self.image = "../res/images/wumpus/wumpus.png"
 		self.smell = "../res/images/wumpus/smell.png"
 		
