@@ -2,9 +2,10 @@ import math
 from random import randint
 
 class Holes (object):	
-	def __init__(self):
+	def __init__(self, board):
+		self.board = board
 		self.visible = True
-		self.number_holes = 2
+		self.number_holes = 3
 		self.holes_position = self.allocate_holes()
 		self.breeze_distance = 1
 		self.breeze_positions = []
@@ -14,11 +15,14 @@ class Holes (object):
 		
 	def allocate_holes(self):
 		allocation = []
-		allocation_prohibited = [(0,5), (5,0), (4,0), (5,1), (0,4), (1,5)]
+		board = self.board
+		allocation_prohibited = [(0, board.matrix_dimension[0] - 1), (0, board.matrix_dimension[0] - 2),
+								 (1, board.matrix_dimension[0] - 1), (0, board.matrix_dimension[1] - 1), 
+								 (0, board.matrix_dimension[1] - 2), (1, board.matrix_dimension[1] - 1)]
 		 
 		while (len(allocation) < self.number_holes):
-			x = randint(0, 5)
-			y = randint(0, 5)
+			x = randint(0, board.matrix_dimension[1] - 1)
+			y = randint(0, board.matrix_dimension[0] - 1)
 			position = (x, y) 
 			
 			if ((position not in allocation_prohibited) and (position not in allocation)):

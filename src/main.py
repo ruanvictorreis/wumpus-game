@@ -21,9 +21,14 @@ pygame.display.set_caption(namegame)
 
 ### Global variables ###
 board = Board()
-holes = Holes()
+
 hunter = Hunter()
+hunter.position_y = board.matrix_dimension[0] - 1
+
 wumpus = Wumpus()
+wumpus.position_x = board.matrix_dimension[1] - 1
+
+holes = Holes(board)
 mainscreen = pygame.display.set_mode((board.width, board.height), screentype, 32)
 ###
 
@@ -182,15 +187,15 @@ def draw_matrix():
 	x = board.spacing
 	y = board.spacing
 	
-	for i in range (0, len(board.matrix)):
-		for j in range (0, len(board.matrix[i])):
+	for i in range (0, board.matrix_dimension[0]):
+		for j in range (0, board.matrix_dimension[1]):
 			mainscreen.blit(cell,(x,y))
 			x += (board.spacing + board.cell_dimension)
 		y += (board.spacing + board.cell_dimension)
 		x = board.spacing
 	
-	draw_wumpus()
 	draw_holes()
+	draw_wumpus()
 	perception()
 	draw_hunter()
 	pygame.display.flip()
