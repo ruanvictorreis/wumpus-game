@@ -3,12 +3,12 @@ from random import randint
 
 class Holes (object):	
 	def __init__(self):
-		self.visible = False
+		self.visible = True
 		self.number_holes = 2
 		self.holes_position = self.allocate_holes()
-		self.brezze_distance = 2
-		self.brezze_positions = []
-		self.breeze_visible = False
+		self.breeze_distance = 1
+		self.breeze_positions = []
+		self.breeze_visible = True
 		self.image = "../res/images/hole/hole.png"
 		self.breeze = "../res/images/hole/breeze.png"
 		
@@ -33,5 +33,10 @@ class Holes (object):
 						allocation.append((x, y))			
 				else:
 					allocation.append((x, y))
-		print(allocation)
 		return allocation
+	
+	def set_breeze_positions(self, positions):
+		self.breeze_positions = positions
+	
+	def clean_breeze_positions(self):
+		self.breeze_positions = []

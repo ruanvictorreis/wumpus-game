@@ -25,8 +25,8 @@ class Wumpus (object):
 	def decrement_y(self):
 		self.position_y = self.position_y - 1
 	
-	def set_small_positions(self, positions):
+	def set_smell_positions(self, positions):
 		self.smell_positions = positions
 	
-	def clean_small_positions(self):
+	def clean_smell_positions(self):
 		self.smell_positions = []

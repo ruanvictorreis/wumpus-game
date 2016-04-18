@@ -81,7 +81,7 @@ def draw_wumpus_smells():
 	wumpus_x = wumpus.position_x
 	wumpus_y = wumpus.position_y
 	wumpus_smell_positions = []
-	wumpus.clean_small_positions()
+	wumpus.clean_smell_positions()
 	wumpus_smell = load_image_alpha(wumpus.smell)
 	
 	for i in range(1, wumpus.smell_distance + 1):
@@ -105,7 +105,7 @@ def draw_wumpus_smells():
 				mainscreen.blit(wumpus_smell,(x,y))
 			wumpus_smell_positions.append(j)
 				
-	wumpus.set_small_positions(wumpus_smell_positions)
+	wumpus.set_smell_positions(wumpus_smell_positions)
 
 def draw_wumpus():
 	if(wumpus.visible):	
@@ -114,6 +114,45 @@ def draw_wumpus():
 		wumpus_image = load_image(wumpus.image)
 		mainscreen.blit(wumpus_image,(x,y))
 	draw_wumpus_smells()
+	
+def draw_hole_breeze():
+	holes_breeze_positions = []
+	holes.clean_breeze_positions()
+	hole_breeze = load_image_alpha(holes.breeze)
+	
+	list_s = []
+	
+	for hole in holes.holes_position:
+		for i in range(1, holes.breeze_distance + 1):
+			hole_x = hole[0]
+			hole_y = hole[1]
+			list_s.append((hole_x - i, hole_y))
+			list_s.append((hole_x + i, hole_y))
+			list_s.append((hole_x, hole_y - i))        
+			list_s.append((hole_x, hole_y + i))
+		
+			if(i ==  holes.breeze_distance - 1):
+				list_s.append((hole_x - i, hole_y - i))
+				list_s.append((hole_x + i, hole_y + i))
+				list_s.append((hole_x + i, hole_y - i))
+				list_s.append((hole_x - i, hole_y + i))
+		
+	for j in list_s:
+		if(holes.breeze_visible):
+			x = (j[0] * board.cell_dimension) + (j[0] * board.spacing) + board.spacing
+			y = (j[1] * board.cell_dimension) + (j[1] * board.spacing) + board.spacing	
+			mainscreen.blit(hole_breeze,(x,y))
+		holes_breeze_positions.append(j)		
+	holes.set_breeze_positions(holes_breeze_positions)
+	
+def draw_holes():
+	if(holes.visible):	
+		hole_image = load_image(holes.image)
+		for position in holes.holes_position:
+			x = (position[0] * board.cell_dimension) + (position[0] * board.spacing) + board.spacing
+			y = (position[1] * board.cell_dimension) + (position[1] * board.spacing) + board.spacing
+			mainscreen.blit(hole_image,(x,y))
+	draw_hole_breeze()
 
 def perception_smell(position):
 	x = (position[0] * board.cell_dimension) + (position[0] * board.spacing) + board.spacing
@@ -151,6 +190,7 @@ def draw_matrix():
 		x = board.spacing
 	
 	draw_wumpus()
+	draw_holes()
 	perception()
 	draw_hunter()
 	pygame.display.flip()
