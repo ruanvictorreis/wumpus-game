@@ -4,7 +4,7 @@ class Wumpus (object):
 		self.visible = True
 		self.position_x = 0
 		self.position_y = 0
-		self.smell_distance = 2
+		self.smell_distance = 1
 		self.smell_positions = []
 		self.smell_visible = True
 		self.image = "../res/images/wumpus/wumpus.png"

@@ -3,7 +3,7 @@ class Hunter (object):
 	def __init__(self):
 		self.position_x = 0
 		self.position_y = 0
-		self.smell_distance = 2
+		self.smell_distance = 1
 		self.smell_visible = True
 		self.smell = "../res/images/hunter/smell.png"
 		self.direction = "FRONT"

@@ -5,7 +5,7 @@ class Holes (object):
 	def __init__(self, board):
 		self.board = board
 		self.visible = True
-		self.number_holes = 3
+		self.number_holes = 2
 		self.holes_position = self.allocate_holes()
 		self.breeze_distance = 1
 		self.breeze_positions = []
