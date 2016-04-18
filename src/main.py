@@ -65,7 +65,6 @@ def draw_hunter_smells():
 			list_s.append((hunter_x + i, hunter_y - i))
 			list_s.append((hunter_x - i, hunter_y + i))
 		
-		
 		for j in list_s:
 			if(hunter.smell_visible):
 				x = (j[0] * board.cell_dimension) + (j[0] * board.spacing) + board.spacing
@@ -173,15 +172,36 @@ def perception_wumpus(position):
 	wumpus_image = load_image_alpha(wumpus.image)
 	mainscreen.blit(wumpus_image,(x,y))
 
+def perception_breeze(position):
+	x = (position[0] * board.cell_dimension) + (position[0] * board.spacing) + board.spacing
+	y = (position[1] * board.cell_dimension) + (position[1] * board.spacing) + board.spacing	
+	
+	breeze_image = load_image_alpha(holes.breeze)
+	mainscreen.blit(breeze_image,(x,y))
+
+def perception_holes(position):
+	x = (position[0] * board.cell_dimension) + (position[0] * board.spacing) + board.spacing
+	y = (position[1] * board.cell_dimension) + (position[1] * board.spacing) + board.spacing	
+	
+	holes_image = load_image_alpha(holes.image)
+	mainscreen.blit(holes_image,(x,y))
+
 def perception():
 	hunter_position = hunter.position()
 	smells_position = wumpus.smell_positions
+	breezes_position = holes.breeze_positions
 	
 	if(hunter_position in smells_position):
 		perception_smell(hunter_position)
 	
 	if(hunter_position == wumpus.position()):
 		perception_wumpus(hunter_position)
+		
+	if(hunter_position in breezes_position):
+		perception_breeze(hunter_position)
+	
+	if(hunter_position in holes.holes_position):
+		perception_holes(hunter_position)
 			
 def draw_matrix():
 	x = board.spacing

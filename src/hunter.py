@@ -4,7 +4,7 @@ class Hunter (object):
 		self.position_x = 0
 		self.position_y = 0
 		self.smell_distance = 1
-		self.smell_visible = True
+		self.smell_visible = False
 		self.smell = "../res/images/hunter/smell.png"
 		self.direction = "FRONT"
 		self.image = "../res/images/hunter/hunter_front.png"

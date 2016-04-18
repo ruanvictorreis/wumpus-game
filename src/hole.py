@@ -4,22 +4,22 @@ from random import randint
 class Holes (object):	
 	def __init__(self, board):
 		self.board = board
-		self.visible = True
+		self.visible = False
 		self.number_holes = 2
 		self.holes_position = self.allocate_holes()
 		self.breeze_distance = 1
 		self.breeze_positions = []
-		self.breeze_visible = True
+		self.breeze_visible = False
 		self.image = "../res/images/hole/hole.png"
 		self.breeze = "../res/images/hole/breeze.png"
 		
 	def allocate_holes(self):
 		allocation = []
 		board = self.board
-		allocation_prohibited = [(0, board.matrix_dimension[0] - 1), (0, board.matrix_dimension[0] - 2),
-								 (1, board.matrix_dimension[0] - 1), (0, board.matrix_dimension[1] - 1), 
+		allocation_prohibited = [(board.matrix_dimension[0] - 1, 0), (board.matrix_dimension[0] - 2, 0),
+								 (board.matrix_dimension[0] - 1, 1), (0, board.matrix_dimension[1] - 1), 
 								 (0, board.matrix_dimension[1] - 2), (1, board.matrix_dimension[1] - 1)]
-		 
+		
 		while (len(allocation) < self.number_holes):
 			x = randint(0, board.matrix_dimension[1] - 1)
 			y = randint(0, board.matrix_dimension[0] - 1)
