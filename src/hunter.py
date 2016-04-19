@@ -1,9 +1,9 @@
 class Hunter (object):
 	
-	def __init__(self):
+	def __init__(self, board):
 		self.position_x = 0
-		self.position_y = 0
-		self.smell_distance = 1
+		self.position_y = board.matrix_dimension[0] - 1
+		self.smell_distance = 2
 		self.smell_visible = False
 		self.smell = "../res/images/hunter/smell.png"
 		self.direction = "FRONT"

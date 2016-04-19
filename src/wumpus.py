@@ -1,10 +1,10 @@
 class Wumpus (object):
 	
-	def __init__(self):
+	def __init__(self, board):
 		self.visible = False
-		self.position_x = 0
+		self.position_x = board.matrix_dimension[1] - 1
 		self.position_y = 0
-		self.smell_distance = 1
+		self.smell_distance = 2
 		self.smell_positions = []
 		self.smell_visible = False
 		self.image = "../res/images/wumpus/wumpus.png"

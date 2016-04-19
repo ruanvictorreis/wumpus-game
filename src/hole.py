@@ -5,7 +5,7 @@ class Holes (object):
 	def __init__(self, board):
 		self.board = board
 		self.visible = False
-		self.number_holes = 2
+		self.number_holes = 3
 		self.holes_position = self.allocate_holes()
 		self.breeze_distance = 1
 		self.breeze_positions = []
@@ -15,17 +15,13 @@ class Holes (object):
 		
 	def allocate_holes(self):
 		allocation = []
-		board = self.board
-		allocation_prohibited = [(board.matrix_dimension[0] - 1, 0), (board.matrix_dimension[0] - 2, 0),
-								 (board.matrix_dimension[0] - 1, 1), (0, board.matrix_dimension[1] - 1), 
-								 (0, board.matrix_dimension[1] - 2), (1, board.matrix_dimension[1] - 1)]
 		
 		while (len(allocation) < self.number_holes):
-			x = randint(0, board.matrix_dimension[1] - 1)
-			y = randint(0, board.matrix_dimension[0] - 1)
+			x = randint(0, self.board.matrix_dimension[1] - 1)
+			y = randint(0, self.board.matrix_dimension[0] - 1)
 			position = (x, y) 
 			
-			if ((position not in allocation_prohibited) and (position not in allocation)):
+			if ((position not in self.board.reserved_positions) and (position not in allocation)):
 				if (len(allocation) != 0):
 					add = True
 					for allocate in allocation:

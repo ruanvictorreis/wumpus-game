@@ -8,6 +8,7 @@ from board import Board
 from hunter import Hunter
 from wumpus import Wumpus
 from hole import Holes
+from treasure import Treasure
 from random import randint
 pygame.init()
 clock = pygame.time.Clock()
@@ -21,14 +22,11 @@ pygame.display.set_caption(namegame)
 
 ### Global variables ###
 board = Board()
-
-hunter = Hunter()
-hunter.position_y = board.matrix_dimension[0] - 1
-
-wumpus = Wumpus()
-wumpus.position_x = board.matrix_dimension[1] - 1
-
+hunter = Hunter(board)
+wumpus = Wumpus(board)
 holes = Holes(board)
+treasure = Treasure(holes)
+
 mainscreen = pygame.display.set_mode((board.width, board.height), screentype, 32)
 ###
 
@@ -157,6 +155,13 @@ def draw_holes():
 			y = (position[1] * board.cell_dimension) + (position[1] * board.spacing) + board.spacing
 			mainscreen.blit(hole_image,(x,y))
 	draw_hole_breeze()
+	
+def draw_treasure():
+	if(treasure.visible):	
+		x = (treasure.position_x * board.cell_dimension) + (treasure.position_x * board.spacing) + board.spacing
+		y = (treasure.position_y * board.cell_dimension) + (treasure.position_y * board.spacing) + board.spacing
+		treasure_image = load_image_alpha(treasure.image)
+		mainscreen.blit(treasure_image,(x,y))
 
 def perception_smell(position):
 	x = (position[0] * board.cell_dimension) + (position[0] * board.spacing) + board.spacing
@@ -171,6 +176,13 @@ def perception_wumpus(position):
 	
 	wumpus_image = load_image_alpha(wumpus.image)
 	mainscreen.blit(wumpus_image,(x,y))
+	
+def perception_treasure(position):
+	x = (position[0] * board.cell_dimension) + (position[0] * board.spacing) + board.spacing
+	y = (position[1] * board.cell_dimension) + (position[1] * board.spacing) + board.spacing	
+	
+	treasure_image = load_image_alpha(treasure.image)
+	mainscreen.blit(treasure_image,(x,y))
 
 def perception_breeze(position):
 	x = (position[0] * board.cell_dimension) + (position[0] * board.spacing) + board.spacing
@@ -190,19 +202,22 @@ def perception():
 	hunter_position = hunter.position()
 	smells_position = wumpus.smell_positions
 	breezes_position = holes.breeze_positions
-	
-	if(hunter_position in smells_position):
-		perception_smell(hunter_position)
-	
+		
 	if(hunter_position == wumpus.position()):
 		perception_wumpus(hunter_position)
+	
+	if(hunter_position == treasure.position):
+		perception_treasure(hunter_position)
+
+	if(hunter_position in smells_position):
+		perception_smell(hunter_position)
 		
 	if(hunter_position in breezes_position):
 		perception_breeze(hunter_position)
 	
 	if(hunter_position in holes.holes_position):
 		perception_holes(hunter_position)
-			
+					
 def draw_matrix():
 	x = board.spacing
 	y = board.spacing
@@ -216,6 +231,7 @@ def draw_matrix():
 	
 	draw_holes()
 	draw_wumpus()
+	draw_treasure()
 	perception()
 	draw_hunter()
 	pygame.display.flip()
