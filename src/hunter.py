@@ -3,7 +3,7 @@ class Hunter(object):
         self.position_x = 0
         self.position_y = board.matrix_dimension[0] - 1
         self.smell_distance = 2
-        self.smell_visible = True
+        self.smell_visible = False
         self.smell = "../res/images/hunter/smell.png"
         self.direction = "FRONT"
         self.image = "../res/images/hunter/hunter_front.png"

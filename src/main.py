@@ -283,7 +283,7 @@ def move_down():
 def run():
     while True:
         for event in pygame.event.get():
-            if event.type == QUIT:
+            if event.type == pygame.QUIT:
                 sys.exit(0)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
