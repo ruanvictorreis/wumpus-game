@@ -1,12 +1,11 @@
 # coding: utf-8
 
+import pygame
 import sys
 
-import pygame
 from board import Board
 from hole import Holes
 from hunter import Hunter
-from pygame.locals import *
 from treasure import Treasure
 from wumpus import Wumpus
 
@@ -256,27 +255,51 @@ def draw_matrix():
     pygame.display.flip()
 
 
-def move_left():
+def hunter_move_left():
     if hunter.position_x > 0:
         hunter.decrement_x()
         draw_matrix()
 
 
-def move_right():
+def hunter_move_right():
     if hunter.position_x < board.matrix_dimension[1] - 1:
         hunter.increment_x()
         draw_matrix()
 
 
-def move_up():
+def hunter_move_up():
     if hunter.position_y > 0:
         hunter.decrement_y()
         draw_matrix()
 
 
-def move_down():
+def hunter_move_down():
     if hunter.position_y < board.matrix_dimension[0] - 1:
         hunter.increment_y()
+        draw_matrix()
+
+
+def wumpus_move_left():
+    if wumpus.position_x > 0:
+        wumpus.decrement_x()
+        draw_matrix()
+
+
+def wumpus_move_right():
+    if wumpus.position_x < board.matrix_dimension[1] - 1:
+        wumpus.increment_x()
+        draw_matrix()
+
+
+def wumpus_move_up():
+    if wumpus.position_y > 0:
+        wumpus.decrement_y()
+        draw_matrix()
+
+
+def wumpus_move_down():
+    if wumpus.position_y < board.matrix_dimension[0] - 1:
+        wumpus.increment_y()
         draw_matrix()
 
 
@@ -287,13 +310,17 @@ def run():
                 sys.exit(0)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    move_left()
+                    hunter_move_left()
+                    wumpus_move_left()
                 elif event.key == pygame.K_RIGHT:
-                    move_right()
+                    hunter_move_right()
+                    wumpus_move_right()
                 elif event.key == pygame.K_UP:
-                    move_up()
+                    hunter_move_up()
+                    wumpus_move_up()
                 elif event.key == pygame.K_DOWN:
-                    move_down()
+                    hunter_move_down()
+                    wumpus_move_down()
         clock.tick(60)
 
 

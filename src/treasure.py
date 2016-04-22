@@ -3,7 +3,7 @@ from random import randint
 
 class Treasure(object):
     def __init__(self, holes):
-        self.visible = False
+        self.visible = True
         self.holes = holes
         self.board = holes.board
         self.position = self.allocate_treasure()
