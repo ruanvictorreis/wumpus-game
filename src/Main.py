@@ -1,7 +1,6 @@
 # coding: utf-8
 
 import pygame
-import screen
 from Board import Board
 from Cell import Cell
 from Hole import Holes
@@ -24,7 +23,7 @@ done = False
 # Use this boolean variable to trigger if the game is over.
 game_over = False
 # This is a font we use to draw text on the screen (size 36)
-font = pygame.font.Font(None, 50)
+font = pygame.font.Font("../res/fonts/mrsmonster.ttf", 108)
 
 ### Global variables ###
 board = Board()
@@ -257,6 +256,14 @@ def draw_matrix():
     draw_treasure()
     perception()
     draw_hunter()
+
+    if game_over:
+        text = font.render("Game Over", True, (0, 153, 73))
+        text_rect = text.get_rect()
+        text_x = board.width / 2 - text_rect.width / 2
+        text_y = board.height / 2 - text_rect.height / 2
+        mainscreen.blit(text, [text_x, text_y])
+
     pygame.display.flip()
 
 
@@ -375,6 +382,7 @@ def reconstruct_path(came_from, start, goal):
 
 
 while not done:
+
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
@@ -402,14 +410,7 @@ while not done:
                     path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
                     wumpus_move(path[1])
 
-        if game_over:
-            text = font.render("Game Over", True, (0, 255, 0))
-            text_rect = text.get_rect()
-            text_x = board.width / 2 - text_rect.width / 2
-            text_y = board.height / 2 - text_rect.height / 2
-            mainscreen.blit(text, [text_x, text_y])
-
-    clock.tick(60)
     draw_matrix()
+    clock.tick(60)
 
 pygame.quit()
