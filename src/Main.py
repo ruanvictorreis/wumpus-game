@@ -1,15 +1,14 @@
 # coding: utf-8
 
-import sys
-
 import pygame
-from Queue import PriorityQueue
-from board import Board
-from cell import Cell
-from hole import Holes
-from hunter import Hunter
-from treasure import Treasure
-from wumpus import Wumpus
+import screen
+from Board import Board
+from Cell import Cell
+from Hole import Holes
+from Hunter import Hunter
+from PriorityQueue import PriorityQueue
+from Treasure import Treasure
+from Wumpus import Wumpus
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -20,6 +19,12 @@ screentype = 0
 # screentype = FULLSCREEN
 sound_volume = 0.4
 pygame.display.set_caption(namegame)
+# Loop until the user clicks the close button.
+done = False
+# Use this boolean variable to trigger if the game is over.
+game_over = False
+# This is a font we use to draw text on the screen (size 36)
+font = pygame.font.Font(None, 50)
 
 ### Global variables ###
 board = Board()
@@ -30,8 +35,6 @@ treasure = Treasure(holes)
 
 mainscreen = pygame.display.set_mode((board.width, board.height), screentype, 32)
 
-
-###
 
 def load_image_alpha(path):
     imagem = pygame.image.load(path).convert_alpha()
@@ -305,6 +308,17 @@ def wumpus_move_down():
         draw_matrix()
 
 
+def wumpus_move(node):
+    if wumpus.position_x - node.position_x == 0 and wumpus.position_y - node.position_y == -1:
+        wumpus_move_down()
+    elif wumpus.position_x - node.position_x == 1 and wumpus.position_y - node.position_y == 0:
+        wumpus_move_left()
+    elif wumpus.position_x - node.position_x == -1 and wumpus.position_y - node.position_y == 0:
+        wumpus_move_right()
+    else:
+        wumpus_move_up()
+
+
 def heuristic(start, goal):
     dx = abs(start.position_x - goal.position_x)
     dy = abs(start.position_y - goal.position_y)
@@ -324,11 +338,12 @@ def a_star_search(start, goal):
     while not frontier.empty():
         current = frontier.get()
         if current.position_x == goal.position_x and current.position_y == goal.position_y:
-            print('WUMPUS FOUND HUNTER... Done!')
             break
 
         for next in neighbors(current):
             next_cell = Cell(next[0], next[1])
+            if next_cell.position_x == goal.position_x and next_cell.position_y == goal.position_y:
+                next_cell = goal
             new_cost = cost_so_far[current] + heuristic(current, next_cell)
             if next_cell not in cost_so_far or new_cost < cost_so_far[next_cell]:
                 cost_so_far[next_cell] = new_cost
@@ -336,7 +351,7 @@ def a_star_search(start, goal):
                 frontier.put(next_cell, priority)
                 came_from[next_cell] = current
 
-    return came_from, cost_so_far
+    return came_from  # , cost_so_far
 
 
 def neighbors(node):
@@ -349,29 +364,52 @@ def neighbors(node):
     return result
 
 
-def run():
-    while True:
-        for event in pygame.event.get():
+def reconstruct_path(came_from, start, goal):
+    current = goal
+    path = [current]
+    while current != start:
+        current = came_from[current]
+        path.append(current)
+    path.reverse()
+    return path
 
-            if event.type == pygame.QUIT:
-                sys.exit(0)
+
+while not done:
+    for event in pygame.event.get():
+
+        if event.type == pygame.QUIT:
+            done = True
+
+        if wumpus.position_x == hunter.position_x and wumpus.position_y == hunter.position_y:
+            game_over = True
+
+        if not game_over:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     hunter_move_left()
-                    result = a_star_search(wumpus, hunter)
-                    for x in result:
-                        print(x)
+                    path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
+                    wumpus_move(path[1])
                 elif event.key == pygame.K_RIGHT:
                     hunter_move_right()
-                    a_star_search(wumpus, hunter)
+                    path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
+                    wumpus_move(path[1])
                 elif event.key == pygame.K_UP:
                     hunter_move_up()
-                    a_star_search(wumpus, hunter)
+                    path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
+                    wumpus_move(path[1])
                 elif event.key == pygame.K_DOWN:
                     hunter_move_down()
-                    a_star_search(wumpus, hunter)
-        clock.tick(60)
+                    path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
+                    wumpus_move(path[1])
 
+        if game_over:
+            text = font.render("Game Over", True, (0, 255, 0))
+            text_rect = text.get_rect()
+            text_x = board.width / 2 - text_rect.width / 2
+            text_y = board.height / 2 - text_rect.height / 2
+            mainscreen.blit(text, [text_x, text_y])
 
-draw_matrix()
-run()
+    clock.tick(60)
+    draw_matrix()
+
+pygame.quit()
