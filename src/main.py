@@ -1,11 +1,11 @@
 # coding: utf-8
 
-import math
-import pygame
 import sys
-from Queue import PriorityQueue
 
+import pygame
+from Queue import PriorityQueue
 from board import Board
+from cell import Cell
 from hole import Holes
 from hunter import Hunter
 from treasure import Treasure
@@ -305,54 +305,71 @@ def wumpus_move_down():
         draw_matrix()
 
 
-def heuristic(hunter, wumpus):
-    return math.sqrt((hunter.position_x - wumpus.position_x) ** 2 + (hunter.position_y - wumpus.position_y) ** 2)
+def heuristic(start, goal):
+    dx = abs(start.position_x - goal.position_x)
+    dy = abs(start.position_y - goal.position_y)
+    return (dx + dy)
 
 
-def a_star_search(graph, start, goal):
+def a_star_search(start, goal):
     frontier = PriorityQueue()
     frontier.put(start, 0)
+
     came_from = {}
     cost_so_far = {}
-    came_from[start] = None
+
+    came_from[start] = start
     cost_so_far[start] = 0
 
     while not frontier.empty():
         current = frontier.get()
-
-        if current == goal:
+        if current.position_x == goal.position_x and current.position_y == goal.position_y:
+            print('WUMPUS FOUND HUNTER... Done!')
             break
 
-        for next in graph.neighbors(current):
-            new_cost = cost_so_far[current] + graph.cost(current, next)
-            if next not in cost_so_far or new_cost < cost_so_far[next]:
-                cost_so_far[next] = new_cost
-                priority = new_cost + heuristic(hunter.position, next)
-                frontier.put(next, priority)
-                came_from[next] = current
+        for next in neighbors(current):
+            next_cell = Cell(next[0], next[1])
+            new_cost = cost_so_far[current] + heuristic(current, next_cell)
+            if next_cell not in cost_so_far or new_cost < cost_so_far[next_cell]:
+                cost_so_far[next_cell] = new_cost
+                priority = new_cost + heuristic(goal, next_cell)
+                frontier.put(next_cell, priority)
+                came_from[next_cell] = current
 
     return came_from, cost_so_far
+
+
+def neighbors(node):
+    dirs = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+    result = []
+    for dir in dirs:
+        neighbor = [node.position_x + dir[0], node.position_y + dir[1]]
+        if 0 <= neighbor[0] < 6 and 0 <= neighbor[1] < 6:
+            result.append(neighbor)
+    return result
 
 
 def run():
     while True:
         for event in pygame.event.get():
-            print heuristic(hunter, wumpus)
+
             if event.type == pygame.QUIT:
                 sys.exit(0)
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     hunter_move_left()
-                    wumpus_move_left()
+                    result = a_star_search(wumpus, hunter)
+                    for x in result:
+                        print(x)
                 elif event.key == pygame.K_RIGHT:
                     hunter_move_right()
-                    wumpus_move_right()
+                    a_star_search(wumpus, hunter)
                 elif event.key == pygame.K_UP:
                     hunter_move_up()
-                    wumpus_move_up()
+                    a_star_search(wumpus, hunter)
                 elif event.key == pygame.K_DOWN:
                     hunter_move_down()
-                    wumpus_move_down()
+                    a_star_search(wumpus, hunter)
         clock.tick(60)
 
 

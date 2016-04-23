@@ -21,3 +21,9 @@ class Treasure(object):
             if (temp not in self.board.reserved_positions) and (temp not in self.holes.holes_position):
                 position = temp
         return position
+
+    def __str__(self):
+        return '({}, {})'.format(self.position_x, self.position_y)
+
+    def __repr__(self):
+        return self.__str__()

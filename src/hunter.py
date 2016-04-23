@@ -40,3 +40,9 @@ class Hunter(object):
 
     def clean_small_positions(self):
         self.smell_positions = []
+
+    def __str__(self):
+        return '({}, {})'.format(self.position_x, self.position_y)
+
+    def __repr__(self):
+        return self.__str__()
