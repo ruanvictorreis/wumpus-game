@@ -258,7 +258,7 @@ def draw_matrix():
     draw_hunter()
 
     if game_over:
-        text = font.render("Game Over", True, (0, 153, 73))
+        text = font.render("Game Over", True, (153, 0, 0))
         text_rect = text.get_rect()
         text_x = board.width / 2 - text_rect.width / 2
         text_y = board.height / 2 - text_rect.height / 2
