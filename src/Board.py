@@ -9,3 +9,5 @@ class Board(object):
         self.reserved_positions = [(self.matrix_dimension[0] - 1, 0), (self.matrix_dimension[0] - 2, 0),
                                    (self.matrix_dimension[0] - 1, 1), (0, self.matrix_dimension[1] - 1),
                                    (0, self.matrix_dimension[1] - 2), (1, self.matrix_dimension[1] - 1)]
+        self.holes_positions = []
+        self.treasure_position = []

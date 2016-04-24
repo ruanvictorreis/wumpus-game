@@ -23,6 +23,7 @@ done = False
 # Use this boolean variable to trigger if the game is over.
 game_over = False
 # This is a font we use to draw text on the screen (size 36)
+winner = False
 font = pygame.font.Font("../res/fonts/mrsmonster.ttf", 108)
 
 ### Global variables ###
@@ -258,7 +259,14 @@ def draw_matrix():
     draw_hunter()
 
     if game_over:
-        text = font.render("Game Over", True, (153, 0, 0))
+        text = font.render("You Lose!", True, (153, 0, 0))
+        text_rect = text.get_rect()
+        text_x = board.width / 2 - text_rect.width / 2
+        text_y = board.height / 2 - text_rect.height / 2
+        mainscreen.blit(text, [text_x, text_y])
+
+    if winner:
+        text = font.render("You Win!", True, (153, 0, 0))
         text_rect = text.get_rect()
         text_x = board.width / 2 - text_rect.width / 2
         text_y = board.height / 2 - text_rect.height / 2
@@ -366,7 +374,8 @@ def neighbors(node):
     result = []
     for dir in dirs:
         neighbor = [node.position_x + dir[0], node.position_y + dir[1]]
-        if 0 <= neighbor[0] < 6 and 0 <= neighbor[1] < 6:
+        if 0 <= neighbor[0] < 6 and 0 <= neighbor[1] < 6 and neighbor not in board.holes_positions and neighbor not \
+                in board.treasure_position:
             result.append(neighbor)
     return result
 
@@ -381,6 +390,13 @@ def reconstruct_path(came_from, start, goal):
     return path
 
 
+def win_game():
+    result = False
+    if hunter.position_x == board.treasure_position[0][0] and hunter.position_y == board.treasure_position[0][1]:
+        result = True
+    return result
+
+
 while not done:
 
     for event in pygame.event.get():
@@ -391,24 +407,31 @@ while not done:
         if wumpus.position_x == hunter.position_x and wumpus.position_y == hunter.position_y:
             game_over = True
 
-        if not game_over:
+        if win_game():
+            winner = True
+
+        if not game_over and not winner:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     hunter_move_left()
-                    path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
-                    wumpus_move(path[1])
+                    if not win_game():
+                        path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
+                        wumpus_move(path[1])
                 elif event.key == pygame.K_RIGHT:
                     hunter_move_right()
-                    path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
-                    wumpus_move(path[1])
+                    if not win_game():
+                        path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
+                        wumpus_move(path[1])
                 elif event.key == pygame.K_UP:
                     hunter_move_up()
-                    path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
-                    wumpus_move(path[1])
+                    if not win_game():
+                        path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
+                        wumpus_move(path[1])
                 elif event.key == pygame.K_DOWN:
                     hunter_move_down()
-                    path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
-                    wumpus_move(path[1])
+                    if not win_game():
+                        path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
+                        wumpus_move(path[1])
 
     draw_matrix()
     clock.tick(60)

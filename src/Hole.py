@@ -31,8 +31,10 @@ class Holes(object):
                             add = False
                     if add:
                         allocation.append((x, y))
+                        self.board.holes_positions.append([x, y])
                 else:
                     allocation.append((x, y))
+                    self.board.holes_positions.append([x, y])
         return allocation
 
     def set_breeze_positions(self, positions):

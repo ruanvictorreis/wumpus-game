@@ -20,6 +20,7 @@ class Treasure(object):
 
             if (temp not in self.board.reserved_positions) and (temp not in self.holes.holes_position):
                 position = temp
+        self.board.treasure_position.append([x, y])
         return position
 
     def __str__(self):
