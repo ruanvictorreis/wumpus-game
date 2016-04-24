@@ -266,7 +266,7 @@ def draw_matrix():
         mainscreen.blit(text, [text_x, text_y])
 
     if winner:
-        text = font.render("You Win!", True, (153, 0, 0))
+        text = font.render("You Win!", True, (0, 0, 255))
         text_rect = text.get_rect()
         text_x = board.width / 2 - text_rect.width / 2
         text_y = board.height / 2 - text_rect.height / 2
@@ -396,6 +396,7 @@ def win_game():
         result = True
     return result
 
+
 def lose_game():
     result = False
     if hunter.position_x == wumpus.position_x and hunter.position_y == wumpus.position_y:
@@ -404,7 +405,6 @@ def lose_game():
     if position in board.holes_positions:
         result = True
     return result
-
 
 
 while not done:
