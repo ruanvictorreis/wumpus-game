@@ -396,6 +396,16 @@ def win_game():
         result = True
     return result
 
+def lose_game():
+    result = False
+    if hunter.position_x == wumpus.position_x and hunter.position_y == wumpus.position_y:
+        result = True
+    position = [hunter.position_x, hunter.position_y]
+    if position in board.holes_positions:
+        result = True
+    return result
+
+
 
 while not done:
 
@@ -404,7 +414,7 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
 
-        if wumpus.position_x == hunter.position_x and wumpus.position_y == hunter.position_y:
+        if lose_game():
             game_over = True
 
         if win_game():
@@ -414,22 +424,22 @@ while not done:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     hunter_move_left()
-                    if not win_game():
+                    if not win_game() and not lose_game():
                         path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
                         wumpus_move(path[1])
                 elif event.key == pygame.K_RIGHT:
                     hunter_move_right()
-                    if not win_game():
+                    if not win_game() and not lose_game():
                         path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
                         wumpus_move(path[1])
                 elif event.key == pygame.K_UP:
                     hunter_move_up()
-                    if not win_game():
+                    if not win_game() and not lose_game():
                         path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
                         wumpus_move(path[1])
                 elif event.key == pygame.K_DOWN:
                     hunter_move_down()
-                    if not win_game():
+                    if not win_game() and not lose_game():
                         path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
                         wumpus_move(path[1])
 
