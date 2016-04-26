@@ -442,6 +442,13 @@ while not done:
                     if not win_game() and not lose_game():
                         path = reconstruct_path(a_star_search(wumpus, hunter), wumpus, hunter)
                         wumpus_move(path[1])
+                elif event.key == pygame.K_d:
+                    wumpus.visible = not wumpus.visible
+                    wumpus.smell_visible = not wumpus.smell_visible
+                    treasure.visible = not treasure.visible
+                    holes.visible = not holes.visible
+                    holes.breeze_visible = not holes.breeze_visible
+                    hunter.smell_visible = not hunter.smell_visible
 
     draw_matrix()
     clock.tick(60)
