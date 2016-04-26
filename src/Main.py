@@ -448,6 +448,7 @@ while not done:
                     treasure.visible = not treasure.visible
                     holes.visible = not holes.visible
                     holes.breeze_visible = not holes.breeze_visible
+                    hunter.smell_visible = not hunter.smell_visible
 
     draw_matrix()
     clock.tick(60)
