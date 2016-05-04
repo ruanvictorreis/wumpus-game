@@ -311,14 +311,19 @@ def wumpus_move_down():
 
 def wumpus_move():
     if(running and hunter.moved):
-        node = wumpus.move_a_star(hunter, board)
+        node = wumpus.move_a_star(hunter)
+        x_decision = wumpus.position_x - node.position_x
+        y_decision = wumpus.position_y - node.position_y
         
-        if wumpus.position_x - node.position_x == 0 and wumpus.position_y - node.position_y == -1:
+        if  x_decision == 0 and y_decision == -1:
             wumpus_move_down()
-        elif wumpus.position_x - node.position_x == 1 and wumpus.position_y - node.position_y == 0:
+        
+        elif x_decision == 1 and y_decision == 0:
             wumpus_move_left()
-        elif wumpus.position_x - node.position_x == -1 and wumpus.position_y - node.position_y == 0:
+        
+        elif x_decision == -1 and y_decision == 0:
             wumpus_move_right()
+        
         else:
 		    wumpus_move_up()
 
