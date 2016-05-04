@@ -3,7 +3,8 @@ class Hunter(object):
         self.position_x = 0
         self.position_y = board.matrix_dimension[0] - 1
         self.smell_distance = 2
-        self.smell_visible = True
+        self.smell_visible = False
+        self.moved = False
         self.smell = "../res/images/hunter/smell.png"
         self.direction = "FRONT"
         self.image = "../res/images/hunter/hunter_front.png"
@@ -13,26 +14,38 @@ class Hunter(object):
 
     def increment_x(self):
         self.image = "../res/images/hunter/hunter_right.png"
+        self.moved = False
+        
         if self.direction == "RIGHT":
             self.position_x += 1
+            self.moved = True
         self.direction = "RIGHT"
 
     def decrement_x(self):
         self.image = "../res/images/hunter/hunter_left.png"
+        self.moved = False
+        
         if self.direction == "LEFT":
             self.position_x -= 1
+            self.moved = True
         self.direction = "LEFT"
 
     def increment_y(self):
         self.image = "../res/images/hunter/hunter_front.png"
+        self.moved = False
+        
         if self.direction == "FRONT":
             self.position_y += 1
+            self.moved = True
         self.direction = "FRONT"
 
     def decrement_y(self):
         self.image = "../res/images/hunter/hunter_back.png"
+        self.moved = False
+        
         if self.direction == "BACK":
             self.position_y -= 1
+            self.moved = True
         self.direction = "BACK"
 
     def set_small_positions(self, positions):

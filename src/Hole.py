@@ -4,12 +4,12 @@ from random import randint
 class Holes(object):
     def __init__(self, board):
         self.board = board
-        self.visible = True
-        self.number_holes = 6
+        self.visible = False
+        self.number_holes = 3
         self.holes_position = self.allocate_holes()
         self.breeze_distance = 1
         self.breeze_positions = []
-        self.breeze_visible = True
+        self.breeze_visible = False
         self.image = "../res/images/hole/hole.png"
         self.breeze = "../res/images/hole/breeze.png"
 
