@@ -4,7 +4,7 @@ from Cell import Cell
 from PriorityQueue import PriorityQueue
 
 
-class AStar(object):
+class AStar2(object):
     def __init__(self, board):
         self.board = board
         self.minimal_distance = 5

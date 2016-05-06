@@ -1,6 +1,7 @@
 from random import randint
 
 from AStar import AStar
+from AStar2 import AStar2
 
 
 class Wumpus(object):
@@ -11,6 +12,7 @@ class Wumpus(object):
         self.position_x = self.initial_position[0]
         self.position_y = self.initial_position[1]
         self.star = AStar(board)
+        # self.star = AStar2(board)
         self.smell_distance = 2
         self.smell_positions = []
         self.smell_visible = False
