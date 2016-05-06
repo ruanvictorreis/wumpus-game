@@ -15,7 +15,7 @@ class Hunter(object):
     def increment_x(self):
         self.image = "../res/images/hunter/hunter_right.png"
         self.moved = False
-        
+
         if self.direction == "RIGHT":
             self.position_x += 1
             self.moved = True
@@ -24,7 +24,7 @@ class Hunter(object):
     def decrement_x(self):
         self.image = "../res/images/hunter/hunter_left.png"
         self.moved = False
-        
+
         if self.direction == "LEFT":
             self.position_x -= 1
             self.moved = True
@@ -33,7 +33,7 @@ class Hunter(object):
     def increment_y(self):
         self.image = "../res/images/hunter/hunter_front.png"
         self.moved = False
-        
+
         if self.direction == "FRONT":
             self.position_y += 1
             self.moved = True
@@ -42,7 +42,7 @@ class Hunter(object):
     def decrement_y(self):
         self.image = "../res/images/hunter/hunter_back.png"
         self.moved = False
-        
+
         if self.direction == "BACK":
             self.position_y -= 1
             self.moved = True

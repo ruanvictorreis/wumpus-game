@@ -1,6 +1,8 @@
+from random import randint
+
 from Cell import Cell
 from PriorityQueue import PriorityQueue
-from random import randint
+
 
 class AStar(object):
     def __init__(self, board):
@@ -15,8 +17,6 @@ class AStar(object):
             actual_neighbors = self.neighbors(start)
             index = randint(0, len(actual_neighbors) - 1)
             return Cell(actual_neighbors[index][0], actual_neighbors[index][1])
-
-
 
     def reconstruct_path(self, came_from, start, goal):
         current = goal
