@@ -13,7 +13,7 @@ clock = pygame.time.Clock()
 ### Properties ###
 namegame = "Wumpus Game"
 screentype = 0
-# screentype = FULLSCREEN
+#screentype = FULLSCREEN
 sound_volume = 0.4
 pygame.display.set_caption(namegame)
 
