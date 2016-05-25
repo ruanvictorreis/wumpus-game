@@ -1,13 +1,22 @@
+from random import randint
+
 from Cell import Cell
 from PriorityQueue import PriorityQueue
 
 
-class AStar(object):
+class AStar2(object):
     def __init__(self, board):
         self.board = board
+        self.minimal_distance = 5
 
     def move(self, start, goal):
-        return self.reconstruct_path(self.a_star_search(start, goal), start, goal)[1]
+        distance = self.heuristic(start, goal)
+        if distance < self.minimal_distance:
+            return self.reconstruct_path(self.a_star_search(start, goal), start, goal)[1]
+        else:
+            actual_neighbors = self.neighbors(start)
+            index = randint(0, len(actual_neighbors) - 1)
+            return Cell(actual_neighbors[index][0], actual_neighbors[index][1])
 
     def reconstruct_path(self, came_from, start, goal):
         current = goal
