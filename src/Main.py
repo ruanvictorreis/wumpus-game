@@ -273,7 +273,13 @@ def match_result():
         text_y = board.height / 2 - text_rect.height / 2
         mainscreen.blit(text, [text_x, text_y])
         running = False
-
+        
+def killer_wumpus_message():
+    text = font.render("Wumpus died!", True, (153, 0, 0))
+    text_rect = text.get_rect()
+    text_x = board.width / 2 - text_rect.width / 2
+    text_y = board.height / 2 - text_rect.height / 2
+    mainscreen.blit(text, [text_x, text_y])
 
 def draw_matrix():
     x = board.spacing
@@ -365,6 +371,16 @@ def wumpus_move():
         else:
             wumpus_move_up()
             
+def wumpus_died():
+    killer_wumpus_message()
+    wumpus.live = False
+    
+    pygame.display.flip()
+    pygame.time.wait(2000)
+    
+    mainscreen = pygame.display.set_mode((board.width, board.height), screentype, 32)
+    draw_matrix()
+            
 def throw_arrow():
     arrow_image = load_image(hunter.arrow_direction())
     
@@ -379,7 +395,7 @@ def throw_arrow():
         if arrow_position == wumpus.position():
             perception_wumpus_arrow(arrow_position)
             mainscreen.blit(arrow_image, (x, y))
-            wumpus.live = False
+            wumpus_died()
             break
         else:
             mainscreen.blit(arrow_image, (x, y))
@@ -388,7 +404,6 @@ def throw_arrow():
             mainscreen.blit(cell, (x, y))
     
     hunter.arrow = False
-    pygame.display.flip()
     
 def debug_mode():
     wumpus.visible = not wumpus.visible
