@@ -355,6 +355,31 @@ def wumpus_move():
 
         else:
             wumpus_move_up()
+            
+def throw_arrow():
+    arrow_image = load_image(hunter.arrow_direction())
+    
+    x_arrow = hunter.arrow_position(1)[0]
+    y_arrow = hunter.arrow_position(1)[1] 
+    
+    x = (x_arrow * board.cell_dimension) + (x_arrow * board.spacing) + board.spacing
+    y = (y_arrow * board.cell_dimension) + (y_arrow * board.spacing) + board.spacing
+    
+    mainscreen.blit(arrow_image, (x, y))
+    pygame.display.flip()
+    pygame.time.wait(500)
+    
+    for i in range(2, board.matrix_dimension[0]):
+        mainscreen.blit(cell, (x, y))
+        x_arrow = hunter.arrow_position(i)[0]
+        y_arrow = hunter.arrow_position(i)[1] 
+    
+        x = (x_arrow * board.cell_dimension) + (x_arrow * board.spacing) + board.spacing
+        y = (y_arrow * board.cell_dimension) + (y_arrow * board.spacing) + board.spacing
+    
+        mainscreen.blit(arrow_image, (x, y))
+        pygame.display.flip()
+        pygame.time.wait(500)
 
 
 def debug_mode():
@@ -429,6 +454,9 @@ def run():
                 elif event.key == pygame.K_DOWN:
                     hunter_move_down()
                     wumpus_move()
+                    
+                elif event.key == pygame.K_SPACE:
+                    throw_arrow()
 
                 elif event.key == pygame.K_d:
                     debug_mode()

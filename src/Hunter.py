@@ -47,6 +47,26 @@ class Hunter(object):
             self.position_y -= 1
             self.moved = True
         self.direction = "BACK"
+        
+    def arrow_direction(self):
+        if self.direction == "FRONT":
+            return "../res/images/arrow/arrow_down.png"
+        elif self.direction == "BACK":
+            return "../res/images/arrow/arrow_up.png"
+        elif self.direction == "RIGHT":
+            return "../res/images/arrow/arrow_right.png"
+        elif self.direction == "LEFT":
+            return "../res/images/arrow/arrow_left.png"
+            
+    def arrow_position(self, distance):
+        if self.direction == "FRONT":
+            return (self.position_x, self.position_y + distance)
+        elif self.direction == "BACK":
+            return (self.position_x, self.position_y - distance)
+        elif self.direction == "RIGHT":
+            return (self.position_x + distance, self.position_y)
+        elif self.direction == "LEFT":
+            return (self.position_x - distance, self.position_y)
 
     def set_small_positions(self, positions):
         self.smell_positions = positions
