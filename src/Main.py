@@ -196,7 +196,13 @@ def perception_wumpus(position):
 
     wumpus_image = load_image_alpha(wumpus.image)
     mainscreen.blit(wumpus_image, (x, y))
+    
+def perception_wumpus_arrow(position):
+    x = (position[0] * board.cell_dimension) + (position[0] * board.spacing) + board.spacing
+    y = (position[1] * board.cell_dimension) + (position[1] * board.spacing) + board.spacing
 
+    wumpus_image = load_image_alpha(wumpus.image)
+    mainscreen.blit(wumpus_image, (x, y))
 
 def perception_treasure(position):
     global winner
@@ -359,28 +365,28 @@ def wumpus_move():
 def throw_arrow():
     arrow_image = load_image(hunter.arrow_direction())
     
-    x_arrow = hunter.arrow_position(1)[0]
-    y_arrow = hunter.arrow_position(1)[1] 
-    
-    x = (x_arrow * board.cell_dimension) + (x_arrow * board.spacing) + board.spacing
-    y = (y_arrow * board.cell_dimension) + (y_arrow * board.spacing) + board.spacing
-    
-    mainscreen.blit(arrow_image, (x, y))
-    pygame.display.flip()
-    pygame.time.wait(500)
-    
-    for i in range(2, board.matrix_dimension[0]):
-        mainscreen.blit(cell, (x, y))
+    for i in range(1, board.matrix_dimension[0]):
+        
+        if(not i == 1):
+            mainscreen.blit(cell, (x, y))
+        
         x_arrow = hunter.arrow_position(i)[0]
-        y_arrow = hunter.arrow_position(i)[1] 
-    
+        y_arrow = hunter.arrow_position(i)[1]
+        arrow_position = (x_arrow, y_arrow)
+        
         x = (x_arrow * board.cell_dimension) + (x_arrow * board.spacing) + board.spacing
         y = (y_arrow * board.cell_dimension) + (y_arrow * board.spacing) + board.spacing
     
         mainscreen.blit(arrow_image, (x, y))
         pygame.display.flip()
         pygame.time.wait(500)
-
+        
+        if arrow_position == wumpus.position():
+            perception_wumpus_arrow(arrow_position)
+            break
+    
+    mainscreen.blit(cell, (x, y))
+    pygame.display.flip()
 
 def debug_mode():
     wumpus.visible = not wumpus.visible
