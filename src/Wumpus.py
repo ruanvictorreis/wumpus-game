@@ -15,6 +15,7 @@ class Wumpus(object):
         # self.star = AStar2(board)
         self.smell_distance = 2
         self.smell_positions = []
+        self.live = True
         self.smell_visible = False
         self.image = "../res/images/wumpus/wumpus.png"
         self.smell = "../res/images/wumpus/smell.png"

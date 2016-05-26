@@ -239,13 +239,13 @@ def perception():
     smells_position = wumpus.smell_positions
     breezes_position = holes.breeze_positions
 
-    if hunter_position == wumpus.position():
+    if hunter_position == wumpus.position() and wumpus.live:
         perception_wumpus(hunter_position)
 
     if hunter_position == treasure.position:
         perception_treasure(hunter_position)
 
-    if hunter_position in smells_position:
+    if hunter_position in smells_position and wumpus.live:
         perception_smell(hunter_position)
 
     if hunter_position in breezes_position:
@@ -287,7 +287,10 @@ def draw_matrix():
         x = board.spacing
 
     draw_holes()
-    draw_wumpus()
+    
+    if(wumpus.live):
+        draw_wumpus()
+    
     draw_treasure()
     perception()
     draw_hunter()
@@ -345,7 +348,7 @@ def wumpus_move_down():
 
 
 def wumpus_move():
-    if (running and hunter.moved):
+    if (running and hunter.moved and wumpus.live):
         node = wumpus.move_a_star(hunter)
         x_decision = wumpus.position_x - node.position_x
         y_decision = wumpus.position_y - node.position_y
@@ -376,6 +379,7 @@ def throw_arrow():
         if arrow_position == wumpus.position():
             perception_wumpus_arrow(arrow_position)
             mainscreen.blit(arrow_image, (x, y))
+            wumpus.live = False
             break
         else:
             mainscreen.blit(arrow_image, (x, y))
@@ -383,6 +387,7 @@ def throw_arrow():
             pygame.time.wait(500)
             mainscreen.blit(cell, (x, y))
     
+    hunter.arrow = False
     pygame.display.flip()
     
 def debug_mode():
@@ -459,7 +464,8 @@ def run():
                     wumpus_move()
                     
                 elif event.key == pygame.K_SPACE:
-                    throw_arrow()
+                    if(hunter.arrow):
+                        throw_arrow()
 
                 elif event.key == pygame.K_d:
                     debug_mode()
