@@ -366,10 +366,6 @@ def throw_arrow():
     arrow_image = load_image(hunter.arrow_direction())
     
     for i in range(1, board.matrix_dimension[0]):
-        
-        if(not i == 1):
-            mainscreen.blit(cell, (x, y))
-        
         x_arrow = hunter.arrow_position(i)[0]
         y_arrow = hunter.arrow_position(i)[1]
         arrow_position = (x_arrow, y_arrow)
@@ -377,17 +373,18 @@ def throw_arrow():
         x = (x_arrow * board.cell_dimension) + (x_arrow * board.spacing) + board.spacing
         y = (y_arrow * board.cell_dimension) + (y_arrow * board.spacing) + board.spacing
     
-        mainscreen.blit(arrow_image, (x, y))
-        pygame.display.flip()
-        pygame.time.wait(500)
-        
         if arrow_position == wumpus.position():
             perception_wumpus_arrow(arrow_position)
+            mainscreen.blit(arrow_image, (x, y))
             break
+        else:
+            mainscreen.blit(arrow_image, (x, y))
+            pygame.display.flip()
+            pygame.time.wait(500)
+            mainscreen.blit(cell, (x, y))
     
-    mainscreen.blit(cell, (x, y))
     pygame.display.flip()
-
+    
 def debug_mode():
     wumpus.visible = not wumpus.visible
     wumpus.smell_visible = not wumpus.smell_visible
